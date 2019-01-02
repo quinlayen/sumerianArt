@@ -1,6 +1,7 @@
 "use strict";
 const request = require("request-promise-native");
 const cheerio = require("cheerio");
+//const {chosenArt} = require('./helpers/getDimensions')
 
 module.exports.getArt = async (event, context) => {
   var query_word = "hawaiian";
@@ -14,11 +15,11 @@ module.exports.getArt = async (event, context) => {
  
 
   let baseReq = await request(url);
-    console.log('baseReq: ')
+    
     try {
-      console.log("trying");
+    
       const $ = cheerio.load(baseReq);
-
+     //console.log('from dimensions', chosenArt())
       var links = [];
       $("#artworksList")
         .children()
