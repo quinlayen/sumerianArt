@@ -1,9 +1,14 @@
 "use strict";
 const request = require("request-promise-native");
 const cheerio = require("cheerio");
-//const {chosenArt} = require('./helpers/getDimensions')
 
-module.exports.getArt = async (event, context) => {
+/* this function will scrape the url and return an array of objects which will
+   contain pairs of links and jpeg images.  The links will be to art that contains the key
+   word(s) provided by the user.  Each link will also be accompanied by a thumbnail to each
+   painting that will be used in the Sumerian app.
+*/
+
+module.exports.getArtList = async (event, context) => {
   var query_word = "hawaiian";
   // if (process.argv.length > 2) {
   //   query_word = process.argv[2];
@@ -12,14 +17,13 @@ module.exports.getArt = async (event, context) => {
   // Send query to the Chicago museum site
   let url = "https://www.artic.edu/collection?q=" + query_word;
 
- 
 
   let baseReq = await request(url);
     
     try {
     
       const $ = cheerio.load(baseReq);
-     //console.log('from dimensions', chosenArt())
+  
       var links = [];
       $("#artworksList")
         .children()
