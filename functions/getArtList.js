@@ -31,7 +31,10 @@ module.exports.getArtList = async (event, context) => {
           let $link = $(this)
             .find("a")
             .attr("href");
-          links.push($link);
+          let $image = $(this).find("img").attr("data-pin-media")
+          if($image) {
+            links.push({'link':$link, 'image':$image});
+          }
         });
 
       if (links.length > 0) {
