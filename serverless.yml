@@ -1,8 +1,8 @@
 service: sumerianArt
 
-# You can pin your service to only deploy with a specific Serverless version
-# Check out our docs for more details
-# frameworkVersion: "=X.X.X"
+
+app: sumerianart-dev
+tenant: quinlayen
 
 provider:
   name: aws
@@ -10,7 +10,7 @@ provider:
 
 # you can overwrite defaults here
 #  stage: dev
-#  region: us-east-1
+  region: us-east-1
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
