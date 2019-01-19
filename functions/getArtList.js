@@ -47,6 +47,8 @@ module.exports.getArtList = async (event, context) => {
       } else {
         console.log("No image found for '" + query_word + "'");
       }
+
+      return links
     } catch (e) {
       console.error(e);
     }
