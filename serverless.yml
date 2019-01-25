@@ -48,6 +48,9 @@ functions:
   getDimensions:
     handler: functions/getDimensions.getDimensions
 
+  lexIntents:
+    handler: functions/lexIntents.lexIntents
+
 
 
 #    The following are a few example events you can configure

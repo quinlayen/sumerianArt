@@ -9,7 +9,9 @@ const cheerio = require("cheerio");
 */
 
 module.exports.getArtList = async (event, context) => {
-  var query_word = "hawaiian";
+  const paintingInfo = JSON.stringify(event.style);
+
+  var query_word = paintingInfo;
   // if (process.argv.length > 2) {
   //   query_word = process.argv[2];
   // }
@@ -17,43 +19,39 @@ module.exports.getArtList = async (event, context) => {
   // Send query to the Chicago museum site
   let url = "https://www.artic.edu/collection?q=" + query_word;
 
-
   let baseReq = await request(url);
-    
-    try {
-    
-      const $ = cheerio.load(baseReq);
-  
-      var links = [];
-      $("#artworksList")
-        .children()
-        .each(function() {
-          let $link = $(this)
-            .find("a")
-            .attr("href");
-          let $image = $(this).find("img").attr("data-pin-media")
-          if($image) {
-            links.push({'link':$link, 'image':$image});
-          }
-        });
 
-      if (links.length > 0) {
-        console.log(
-          "Found " + links.length + " '" + query_word + "' pictures.\n"
-        );
-        links.forEach(function(item) {
-          console.log(item);
-        });
-      } else {
-        console.log("No image found for '" + query_word + "'");
-      }
+  try {
+    const $ = cheerio.load(baseReq);
 
-      return links
-    } catch (e) {
-      console.error(e);
+    var links = [];
+    $("#artworksList")
+      .children()
+      .each(function() {
+        let $link = $(this)
+          .find("a")
+          .attr("href");
+        let $image = $(this)
+          .find("img")
+          .attr("data-pin-media");
+        if ($image) {
+          links.push({ link: $link, image: $image });
+        }
+      });
+
+    if (links.length > 0) {
+      console.log(
+        "Found " + links.length + " '" + query_word + "' pictures.\n"
+      );
+      links.forEach(function(item) {
+        console.log(item);
+      });
+    } else {
+      console.log("No image found for '" + query_word + "'");
     }
-  };
 
-
-
-  
+    return links;
+  } catch (e) {
+    console.error(e);
+  }
+};
